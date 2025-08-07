@@ -8,14 +8,23 @@ export class Assignment {
   id: string;
 
   @ManyToOne(() => Course)
-  courseId: Course;
+  course: Course;
 
   @ManyToOne(() => User)
-  studentId: User;
+  student: User;
 
   @Column({ nullable: true })
-  file: string; // filepath
+  file: string;
 
   @Column({ nullable: true })
   grade: number;
+
+  @Column()
+  title: string;
+
+  @Column({ nullable: true })
+  description: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  dueDate: Date;
 }

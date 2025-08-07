@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,82 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+}
+
+.container {
+  max-width: 960px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1rem;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.navbar a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: #0077cc;
+  font-weight: 500;
+}
+
+.page {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ddd;
+}
+
+.ai-assistant h2 {
+  margin-bottom: 0.5rem;
+}
+
+.section {
+  margin-top: 2rem;
+}
+
+.input {
+  padding: 0.5rem;
+  width: 60%;
+  margin-right: 0.5rem;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #005fa3;
+}
+
+.list {
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+.list li {
+  margin-bottom: 0.5rem;
 }

@@ -18,26 +18,34 @@ export class AssignmentsService {
     @InjectRepository(Course) private courseRepo: Repository<Course>,
   ) {}
 
-  async submit(data: { courseId: string; studentId: string; file: string }) {
-    const student = await this.userRepo.findOne({
-      where: { id: data.studentId },
-    });
-    if (!student || student.role !== 'student')
+  async submit(
+    dto: { courseId: string; studentId: string; file: string },
+    user: User,
+  ) {
+    console.log('DTO:', dto);
+    console.log('User:', user);
+
+    if (user.role !== 'student') {
       throw new ForbiddenException('Only students can submit assignments');
+    }
 
     const course = await this.courseRepo.findOne({
-      where: { id: data.courseId },
+      where: { id: dto.courseId },
     });
-    if (!course) throw new NotFoundException('Course not found');
+    console.log('Course:', course);
+
+    if (!course) {
+      throw new NotFoundException('Course not found');
+    }
 
     const assignment = this.assignmentRepo.create({
-      studentId: student,
-      courseId: course,
-      file: data.file,
+      student: user,
+      course,
+      file: dto.file,
     });
+
     return this.assignmentRepo.save(assignment);
   }
-
   async grade(id: string, grade: number, lecturerId: string) {
     const lecturer = await this.userRepo.findOne({ where: { id: lecturerId } });
     if (!lecturer || lecturer.role !== 'lecturer')
@@ -53,10 +61,41 @@ export class AssignmentsService {
     return this.assignmentRepo.save(assignment);
   }
 
-  async getByStudent(studentId: string) {
+  async getByStudent(student: string) {
     return this.assignmentRepo.find({
-      where: { studentId: { id: studentId } },
+      where: { student: { id: student } },
       relations: ['course'],
     });
+  }
+
+  async create(data: {
+    courseId: string;
+    lecturerId: string;
+    title: string;
+    description?: string;
+    dueDate?: string;
+  }) {
+    const lecturer = await this.userRepo.findOne({
+      where: { id: data.lecturerId },
+    });
+    if (!lecturer || lecturer.role !== 'lecturer') {
+      throw new ForbiddenException('Only lecturers can create assignments');
+    }
+
+    const course = await this.courseRepo.findOne({
+      where: { id: data.courseId },
+    });
+    if (!course) {
+      throw new NotFoundException('Course not found');
+    }
+
+    const assignment = this.assignmentRepo.create({
+      course,
+      title: data.title,
+      description: data.description,
+      dueDate: data.dueDate ? new Date(data.dueDate) : null,
+    });
+
+    return this.assignmentRepo.save(assignment);
   }
 }

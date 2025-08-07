@@ -5,18 +5,10 @@ import { AuthGuard } from '@nestjs/passport';
 export class JwtAuthGuard extends AuthGuard('jwt') {
   handleRequest(err, user, info, context) {
     if (err || !user) {
-      console.error(
-        'JWT Guard Error:',
-        err,
-        'Info:',
-        info,
-        'User:',
-        user,
-        'Headers:',
-        context.getRequest().headers,
-      );
+      console.error('JWT Guard Error:', err, 'Info:', info);
       throw err || new UnauthorizedException('Invalid or missing JWT token');
     }
+
     console.log('JWT Guard Success - User:', user);
     return user;
   }

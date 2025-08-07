@@ -1,5 +1,15 @@
-import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UnauthorizedException,
+  UseGuards,
+  Get,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { CurrentUser } from '../users/current-user.decorator';
+import { User } from 'src/users/user.entity';
+import { JwtAuthGuard } from './jwt-auth.guard.ts';
 
 @Controller('auth')
 export class AuthController {
@@ -17,5 +27,11 @@ export class AuthController {
     @Body() body: { email: string; password: string; role: string },
   ) {
     return this.authService.register(body);
+  }
+
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  getMe(@CurrentUser() user: User) {
+    return user;
   }
 }

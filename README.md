@@ -3,7 +3,7 @@ A scalable University CRM system with role-based access control, course manageme
 Setup Instructions
 Local Setup
 
-Clone the Repository:git clone <repository-url>
+Clone the Repository:git clone <'https://github.com/KingsIke/academic_management.git'>
 cd university-crm
 
 

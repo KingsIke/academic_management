@@ -2,32 +2,14 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-// import { CoursesModule } from './courses/courses.module';
 import { ConfigModule } from '@nestjs/config';
-// import { AuthModule } from './auth/auth.module';
-// import { UsersModule } from './users/users.module';
-// import { CoursesModule } from './courses/courses.module';
-// import { AssignmentsModule } from './assignments/assignments.module';
-// import { AiModule } from './ai/ai.module';
-// import { TranscriptModule } from './transcript/transcript.module';
-// import { ConfigModule } from '@nestjs/config';
+import { CoursesModule } from './courses/courses.module';
+import { AssignmentsModule } from './assignments/assignments.module';
+import { AiModule } from './ai/ai.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
-
-    //  / ConfigModule.forRoot({
-    //    envFilePath: '.env',
-    //   isGlobal: true,
-    //   load: [emailConfig],
-    // }),
-    // TypeOrmModule.forRoot(typeOrmConfig),
-    //   TypeOrmModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   useFactory: typeOrmConfig,
-    //   inject: [ConfigService],
-    // }),
-
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST || 'localhost',
@@ -40,10 +22,9 @@ import { ConfigModule } from '@nestjs/config';
     }),
     AuthModule,
     UsersModule,
-    // CoursesModule,
-    // AssignmentsModule,
-    // AiModule,
-    // TranscriptModule,
+    CoursesModule,
+    AssignmentsModule,
+    AiModule,
   ],
 })
 export class AppModule {}
